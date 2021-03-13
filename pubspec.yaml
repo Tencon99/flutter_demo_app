@@ -1,0 +1,90 @@
+name: tencon_flutter_app
+description: "tencon的第一个自定义flutterApp,功能未知！"
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0
+
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+#   自动路由注册插件
+  auto_route: ^0.6.9
+#   网络缓存图片
+  cached_network_image: ^2.2.0+1
+#   cookie管理器
+  cookie_jar: ^1.0.1
+#   图标库
+  cupertino_icons: ^0.1.2
+#   数据格式化
+  date_format: ^1.0.8
+#   网络请求库
+  dio: ^3.0.10
+#   dio网络cookie管理工具
+  dio_cookie_manager: ^1.0.0
+#   图片全家桶
+  extended_image: ^1.5.0
+#  事件工具
+  event_bus: ^1.1.1
+#   页面路由神器
+  fluro: ^1.7.8
+#   刷新组件
+  flutter_easyrefresh: ^2.1.6
+#   loading加载动画
+  flutter_spinkit: ^4.1.2+1
+#   轮播图组件
+  flutter_swiper: ^1.1.6
+#   网页加载
+  flutter_webview_plugin: ^0.3.11
+#  应用版本更新
+  flutter_xupdate: ^1.0.2
+#   图片下载保存
+  image_picker_saver: ^0.3.0
+#   可自定义提示框
+  oktoast: ^2.3.2
+#   路径
+  path_provider: ^1.6.27
+#   应用包信息
+  package_info: ^0.4.3+2
+#   权限申请
+  permission_handler: 5.0.1+1
+#   数据共享工具
+  provider: ^4.3.3
+#   本地存储
+  shared_preferences: ^0.5.12+4
+#   分享
+  share: ^0.6.5+4
+#   链接处理
+  url_launcher: ^5.7.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+  auto_route_generator: ^0.6.9
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+  - assets/
+
+  fonts:
+    - family: xuifont  #指定一个字体名
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
