@@ -178,7 +178,8 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }).catchError((onError) {
       Navigator.of(context).pop();
-      ToastUtils.error(onError);
+      print('${onError.error.toString()}');
+      ToastUtils.error(onError.toString());
     });
   }
 }

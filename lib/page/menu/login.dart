@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tencon_flutter_app/core/http/http.dart';
 import 'package:tencon_flutter_app/core/utils/privacy.dart';
 import 'package:tencon_flutter_app/core/utils/toast.dart';
@@ -10,6 +11,7 @@ import 'package:tencon_flutter_app/router/router.dart';
 import 'package:tencon_flutter_app/utils/provider.dart';
 import 'package:tencon_flutter_app/utils/sputils.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer' as developer;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -114,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: !_isShowPassWord,
               //校验密码
               validator: (v) {
-                return v.trim().length >= 6
+                return v.trim().length >= 5
                     ? null
                     : I18n.of(context).passwordError;
               }),
@@ -172,22 +174,45 @@ class _LoginPageState extends State<LoginPage> {
         });
 
     UserProfile userProfile = Provider.of<UserProfile>(context, listen: false);
-
-    XHttp.post("/user/login", {
+    Map<String, dynamic> obj = {
       "username": _unameController.text,
       "password": _pwdController.text
-    }).then((response) {
+    };
+    XHttp.request('/login', obj, optionMethod: "post").then((res) async {
       Navigator.pop(context);
-      if (response['errorCode'] == 0) {
-        userProfile.nickName = response['data']['nickname'];
+      if (res.runtimeType.toString() == 'DioError') {
+        developer.log("错误代码：" + res.response.statusCode.toString(),
+            name: '登录请求错误');
+        developer.log("错误：" + res.response.data.toString(), name: '登录请求错误');
+        ToastUtils.error(res.response.data.toString());
+      } else {
+        /// 获取token
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String userToken = res.data['data'];
+        prefs.setString('userToken', userToken);
+        userProfile.nickName = _unameController.text;
+        // userProfile.nickName = res['data']['nickname'];
         ToastUtils.toast(I18n.of(context).loginSuccess);
         XRouter.replace(Routes.mainHomePage);
-      } else {
-        ToastUtils.error(response['errorMsg']);
+        developer.log('data:' + res.data.toString(), name: '登录请求');
       }
-    }).catchError((onError) {
-      Navigator.of(context).pop();
-      ToastUtils.error(onError);
     });
+//     XHttp.post("/user/login", {
+//       "username": _unameController.text,
+//       "password": _pwdController.text
+//     }).then((response) {
+//       Navigator.pop(context);
+//       if (response['errorCode'] == 0) {
+//         userProfile.nickName = response['data']['nickname'];
+//         ToastUtils.toast(I18n.of(context).loginSuccess);
+//         XRouter.replace(Routes.mainHomePage);
+//       } else {
+//         ToastUtils.error(response['errorMsg']);
+//         developer.log(response['errorMsg'], name: '登录请求错误');
+//       }
+//     }).catchError((onError) {
+//       Navigator.of(context).pop();
+//       ToastUtils.error(onError.toString());
+//     });
   }
 }
