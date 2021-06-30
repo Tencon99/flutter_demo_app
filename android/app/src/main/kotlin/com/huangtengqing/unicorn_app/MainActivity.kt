@@ -1,4 +1,4 @@
-package com.htq.tencon_flutter_app
+package com.huangtengqing.unicorn_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
