@@ -12,7 +12,6 @@ import 'package:unicorn_app/core/utils/utils.dart';
 import 'package:unicorn_app/core/utils/xupdate.dart';
 import 'package:unicorn_app/generated/i18n.dart';
 import 'package:unicorn_app/page/home/tab_home.dart';
-import 'package:unicorn_app/page/menu/sponsor.dart';
 import 'package:unicorn_app/utils/provider.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -134,14 +133,24 @@ class _MainHomePageState extends State<MainHomePage> {
         Center(child: Text(I18n.of(context).category)),
         // 活动
         Center(
-            child: Text(
-          I18n.of(context).activity,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                I18n.of(context).activity,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              TextField(
+                maxLines: 4,
+                minLines: 1,
+              ),
+            ],
           ),
-        )),
+        ),
         // 消息
         Container(
           child: Center(
@@ -318,6 +327,17 @@ class _MainHomePageState extends State<MainHomePage> {
                                 Icons.error_outline,
                               ),
                               title: Text(I18n.of(context).about),
+                            ),
+                          ),
+                          PopupMenuItem<String>(
+                            value: "debug",
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              leading: Icon(
+                                Icons.workspaces_outline,
+                              ),
+                              title: Text(I18n.of(context).debug),
                             ),
                           ),
                         ],

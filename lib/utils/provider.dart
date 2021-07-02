@@ -19,7 +19,7 @@ class Store {
         ChangeNotifierProvider.value(value: LocaleModel(SPUtils.getLocale())),
         ChangeNotifierProvider.value(
             value: UserProfile(SPUtils.getNickName(), SPUtils.getAvatarUrl())),
-        ChangeNotifierProvider.value(value: AppStatus(TAB_HOME_INDEX)),
+        ChangeNotifierProvider.value(value: AppStatus(TAB_HOME_INDEX, 0)),
         ChangeNotifierProvider.value(value: AppInfo(getCurPlatform()))
       ],
       child: child,
@@ -151,13 +151,22 @@ const int TAB_PROFILE_INDEX = 4;
 class AppStatus with ChangeNotifier {
   //主页tab的索引
   int _tabIndex;
+  // appBarHeader是否位于顶部 默认为是
+  int _isHeaderTop;
 
-  AppStatus(this._tabIndex);
+  AppStatus(this._tabIndex, this._isHeaderTop);
+
+  int get isHeaderTop => _isHeaderTop;
 
   int get tabIndex => _tabIndex;
 
   set tabIndex(int index) {
     _tabIndex = index;
+    notifyListeners();
+  }
+
+  set isHeaderTop(int isHeaderTop) {
+    _isHeaderTop = isHeaderTop;
     notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:unicorn_app/core/http/http.dart';
 import 'package:unicorn_app/core/utils/toast.dart';
@@ -32,6 +33,17 @@ class DefaultApp {
   static void initApp() {
     // 网络请求初始化
     XHttp.init();
+    // 状态栏字体颜色 === 黑色
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Color(0xFF000000),
+        systemNavigationBarDividerColor: null,
+        statusBarColor: null,
+        systemNavigationBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+    );
   }
 }
 

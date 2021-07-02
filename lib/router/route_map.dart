@@ -3,6 +3,7 @@ import 'package:unicorn_app/core/widget/web_view_page.dart';
 import 'package:unicorn_app/init/splash.dart';
 import 'package:unicorn_app/page/index.dart';
 import 'package:unicorn_app/page/menu/about.dart';
+import 'package:unicorn_app/page/menu/debug.dart';
 import 'package:unicorn_app/page/menu/login.dart';
 import 'package:unicorn_app/page/menu/settings.dart';
 import 'package:unicorn_app/page/menu/sponsor.dart';
@@ -19,6 +20,7 @@ class RouteMap {
     GetPage(name: '/menu/sponsor-page', page: () => SponsorPage()),
     GetPage(name: '/menu/settings-page', page: () => SettingsPage()),
     GetPage(name: '/menu/about-page', page: () => AboutPage()),
+    GetPage(name: '/menu/debug-page', page: () => CustomSliverHeaderDemo()),
   ];
 
   /// 页面切换动画
