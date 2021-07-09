@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unicorn_app/utils/provider.dart';
+import 'dart:developer' as developer;
 
 class CustomSliverHeaderDemo extends StatefulWidget {
   CustomSliverHeaderDemo({Key key}) : super(key: key);
@@ -28,7 +29,7 @@ class _CustomSliverHeaderDemoState extends State<CustomSliverHeaderDemo> {
               changeOffset: (shrinkOffset) {
                 AppStatus appStatus =
                     Provider.of<AppStatus>(context, listen: false);
-                print('shrinkOffset:$shrinkOffset');
+                developer.log('shrinkOffset:$shrinkOffset', name: '测试页面');
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   if (shrinkOffset >= 250) {
                     appStatus.isHeaderTop = 1;
@@ -209,6 +210,7 @@ class _FilmContentState extends State<FilmContent> {
     _controller.addListener(() {
       AppStatus appStatus = Provider.of<AppStatus>(context, listen: false);
       print('offset:${_controller.offset}');
+      developer.log('offset:${_controller.offset}', name: '测试页面');
       if (_controller.offset <= 0) {
         appStatus.isHeaderTop = 0;
       } else {

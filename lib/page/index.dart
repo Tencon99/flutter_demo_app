@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
@@ -26,6 +27,9 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
+  GlobalKey _globalKey = GlobalKey();
+  RenderBox renderBox;
+
   List<BottomNavigationBarItem> getTabs(BuildContext context) => [
         BottomNavigationBarItem(
             label: I18n.of(context).home, icon: Icon(Icons.home)),
@@ -122,7 +126,7 @@ class _MainHomePageState extends State<MainHomePage> {
           : userProfile.avatarUrl =
               'http://112.124.99.196:8888/down/NufGheSSGGzk';
     });
-    Navigator.pop(context);
+    Navigator.pop(context, null);
     ToastUtils.success('图片修改成功!');
   }
 
@@ -252,7 +256,17 @@ class _MainHomePageState extends State<MainHomePage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                )
+                ),
+                Container(
+                  key: _globalKey,
+                  width: 200,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.amber.withOpacity(0.5),
+                  ),
+                ),
+                Text('width:${renderBox.size.width ?? ''}'),
+                Text('height:${renderBox.size.height ?? ''}'),
               ],
             ),
             color: Colors.white,
@@ -266,6 +280,14 @@ class _MainHomePageState extends State<MainHomePage> {
   void initState() {
     super.initState();
     XUpdate.initAndCheck();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getRenderBox();
+    });
+  }
+
+  _getRenderBox() {
+    //获取`RenderBox`对象
+    renderBox = _globalKey.currentContext.findRenderObject();
   }
 
   @override

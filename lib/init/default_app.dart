@@ -62,6 +62,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: appTheme.themeColor,
           // 按钮颜色的主题配置 --- 从共享数据provider中获取主题颜色
           buttonColor: appTheme.themeColor,
+          // 按钮的水波纹颜色为透明
+          splashColor: Colors.transparent,
+          // 强调颜色为透明
+          highlightColor: Colors.transparent,
         ),
         // 获取页面
         getPages: RouteMap.getPages,

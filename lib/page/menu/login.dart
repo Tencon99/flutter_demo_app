@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:unicorn_app/core/http/http.dart';
 import 'package:unicorn_app/core/utils/privacy.dart';
 import 'package:unicorn_app/core/utils/toast.dart';
 import 'package:unicorn_app/core/widget/loading_dialog.dart';
+import 'package:unicorn_app/core/widget/particle/particle_widget.dart';
 import 'package:unicorn_app/generated/i18n.dart';
 import 'package:unicorn_app/page/index.dart';
 import 'package:unicorn_app/page/menu/register.dart';
@@ -11,6 +13,9 @@ import 'package:unicorn_app/utils/provider.dart';
 import 'package:unicorn_app/utils/sputils.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:supercharged/supercharged.dart';
+
+enum _ColorTween { color1, color2 }
 
 class LoginPage extends StatefulWidget {
   @override
@@ -59,11 +64,17 @@ class _LoginPageState extends State<LoginPage> {
               // 点击空白页面关闭键盘
               closeKeyboard(context);
             },
-            child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              child: buildForm(context),
-            ),
+            child: Stack(children: <Widget>[
+              Positioned.fill(child: AnimatedBackground()),
+              Positioned.fill(child: ParticlesWidget(30)),
+              Positioned.fill(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 24.0),
+                  child: buildForm(context),
+                ),
+              ),
+            ]),
           ),
         ),
         onWillPop: () async {
@@ -192,5 +203,40 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.of(context).pop();
       ToastUtils.error(onError);
     });
+  }
+}
+
+/// 动画背景
+class AnimatedBackground extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final tween = MultiTween<_ColorTween>()
+      ..add(
+        _ColorTween.color1,
+        Color(0xffD38312).tweenTo(Colors.lightBlue.shade900),
+        3.seconds,
+      )
+      ..add(
+        _ColorTween.color2,
+        Color(0xffA83279).tweenTo(Colors.blue.shade600),
+        3.seconds,
+      );
+
+    return MirrorAnimation<MultiTweenValues<_ColorTween>>(
+      tween: tween,
+      duration: tween.duration,
+      builder: (context, child, value) {
+        return Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                value.get<Color>(_ColorTween.color1),
+                value.get<Color>(_ColorTween.color2)
+              ])),
+        );
+      },
+    );
   }
 }
